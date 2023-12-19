@@ -84,6 +84,8 @@ $autoload['libraries'] = array();
 */
 $autoload['helpers'] = array();
 
+
+
 /*
 | -------------------------------------------------------------------
 |  Auto-load Models
@@ -93,4 +95,6 @@ $autoload['helpers'] = array();
 |	$autoload['model'] = array('model1_model', 'model2_model')
 */
 $autoload['models'] = array();
+
+
 ?>

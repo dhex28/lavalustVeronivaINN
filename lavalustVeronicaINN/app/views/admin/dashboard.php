@@ -83,6 +83,9 @@
         <th>Phone Number</th>
         <th>Address</th>
         <th>Status</th>
+		<th>Completed</th>
+
+
         
 
         
@@ -102,6 +105,7 @@
             <td><?= $info['phone'] ?></td>
             <td><?= $info['address'] ?></td>
             <td><?= $info['status'] ?></td>
+            <td><?= $info['payment_status'] ?></td>
             <td class="text-right">
 			<div class="dropdown dropdown-action"> <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
             <div class="dropdown-menu dropdown-menu-right">

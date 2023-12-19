@@ -42,7 +42,7 @@ class Crud extends Controller
     public function addBook()
     {
        
-            $check_in_date = $this->io->post('check_in_date');
+          $check_in_date = $this->io->post('check_in_date');
             $check_out_date = $this->io->post('check_out_date');
             $special_requests = $this->io->post('special_requests');
             $name = $this->io->post('name');
@@ -50,13 +50,18 @@ class Crud extends Controller
             $phone = $this->io->post('phone');
             $address = $this->io->post('address');
             $roomName = $this->io->post('roomName');
-
+            $payment_status = 'Pending';
 
         
-        $this->Crud_model->addBook($check_in_date, $check_out_date, $special_requests, $name, $email, $phone, $address, $roomName);
-        $data = $this->Crud_model->readBook();
+            if (isset($_POST['payment']) && $_POST['payment'] != '') {
+                $payment_status = 'Paid';
+            }
+            
+
+            $this->Crud_model->addBook($check_in_date, $check_out_date, $special_requests, $name, $email, $phone, $address, $roomName, $payment_status);
+            $data = $this->Crud_model->readBook();
         //$this->call->view('admin/rooms', $data);
-         redirect('/rooms');
+        redirect('/rooms');
         
     }
     

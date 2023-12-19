@@ -51,6 +51,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="bookNowModalLabel">Booking Confirmation</h5>
+                <!-- <div id="paypal-button-container"></div> -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,6 +76,7 @@
                         <label for="special_requests">Special Requests:</label>
                         <textarea name="special_requests" class="form-control" id="special_requests" rows="3"></textarea>
                     </div>
+                
 
 
                     <a>Contact Information</a>
@@ -97,11 +99,26 @@
                         <label for="address">Address:</label>
                         <input name="address" placeholder=" address" type="text" class="form-control" id="address" required>
                     </div>
-
+                    <div class="form-group">
+                    <label for="payment">Payment:</label>
+                    <input name="payment" placeholder=" payment" type="text" class="form-control" id="payment" readonly required>
+                    </div>
+                    <div class="form-group">
+    <label for="paymentMethod">Payment Method:</label>
+    <select name="paymentMethod" id="paymentMethod" class="form-control" required>
+        <option value="paypal">PayPal</option>
+        <option value="cash">Cash on Delivery</option>
+        <option value="gcash">GCash</option> <!-- Add GCash option -->
+    </select>
+</div>
+                    <h4>Payment</h4>
+                    <div id="paypal-button-container"></div>
                     <br>
-                    <button type="submit" class="btn btn-primary">Book Now</button>  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               
+                    <button id="submitBtn" type="submit" class="btn btn-primary" disabled>Book Now</button> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+                                        </div>
                 <!-- End Booking Form -->
+
             </div>
             </form>
 
@@ -109,12 +126,21 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AanR1xv4KbxqbPuHi4hSXJUV7qHoiUAYJbXpmO1wDZQ5nzxrLbUdNrIhhoO6iwe7RgnltiiM2b9TYFpD&disable-funding=credit,card&currency=PHP"></script>
 
 <script>
 $(document).ready(function () {
     $('.bookNowBtn').click(function () {
         // Get the room name from the clicked button
         var roomName = $(this).data('room_name');
+        var paymentMethod = $('#paymentMethod').val();
+
+        if (paymentMethod === 'gcash') {
+        var totalAmount = 5000; // Replace with your logic to get the total amount
+        $('#payment').val('₱' + totalAmount.toFixed(2)).prop('required', true);
+        $('#submitBtn').prop('disabled', false);
+        $('#payment_status').val('Pending'); // Update payment status if needed
+    }
 
         // Display the room name in the modal
         $('#roomName').val(roomName);
@@ -122,5 +148,44 @@ $(document).ready(function () {
         // Show the modal
         $('#bookNowModal').modal('show');
     });
+
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            // Get the total amount from your logic or variable (totalAmount)
+            var totalAmount = 5000;
+
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        currency_code: "PHP", // Change USD to PHP here
+                        value: totalAmount
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                console.log(details);
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                // document.querySelector('form').submit(); // Submit the form after successful payment
+                var paidAmount = parseFloat(details.purchase_units[0].amount.value);
+
+// Get the total amount from your logic or variable
+var totalAmount = 5000; // Replace this with your logic to get the total amount
+
+// Calculate the remaining balance
+var remainingBalance = totalAmount - paidAmount;
+var totalAmount = <?= $info['price']; ?>;
+
+
+// Update the 'Payment' field with the remaining balance
+$('#payment').val('₱' + remainingBalance.toFixed(2)).prop('required', true); // Update the 'Payment' field and set it as required
+$('#submitBtn').prop('disabled', false);
+$('#payment_status').val('Completed');
+            });
+        },onError: function (err) {
+            console.error('Error:', err);
+        },
+    }).render('#paypal-button-container'); // Replace 'paypal-button-container' with your button container ID
 });
 </script>

@@ -62,7 +62,7 @@ class Crud_model extends Model
 
     //booking
 
-    public function addBook($check_in_date, $check_out_date, $special_requests, $name, $email, $phone, $address,$roomName)
+    public function addBook($check_in_date, $check_out_date, $special_requests, $name, $email, $phone, $address,$roomName, $payment_status)
     {
         $data = array(
             'check_in_date' => $check_in_date,
@@ -73,6 +73,9 @@ class Crud_model extends Model
             'phone' => $phone,
             'address' => $address,
             'roomName' => $roomName, 
+            'payment_status' => $payment_status,
+    
+
             
             
         );

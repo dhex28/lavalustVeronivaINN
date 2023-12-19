@@ -24,6 +24,8 @@
         <th>Phone Number</th>
         <th>Address</th>
         <th>Status</th>
+        <th>Completed</th>
+
         
 
         
@@ -42,6 +44,7 @@
             <td><?= $info['phone'] ?></td>
             <td><?= $info['address'] ?></td>
             <td><?= $info['status'] ?></td>
+            <td><?= $info['payment_status'] ?></td>
             <td class="text-right">
 			<div class="dropdown dropdown-action"> <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -102,6 +105,7 @@
         <th>Phone Number</th>
         <th>Address</th>
         <th>Status</th>
+        <th>Completed</th>
         
 
         
@@ -120,6 +124,7 @@
             <td><?= $info['phone'] ?></td>
             <td><?= $info['address'] ?></td>
             <td><?= $info['status'] ?></td>
+            <td><?= $info['payment_status'] ?></td>
             <td class="text-right">
 			<div class="dropdown dropdown-action"> <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"> 
@@ -187,6 +192,7 @@
             <td><?= $info['phone'] ?></td>
             <td><?= $info['address'] ?></td>
             <td><?= $info['status'] ?></td>
+            
             <td class="text-right">
             <div class="dropdown dropdown-action"> <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v ellipse_color"></i></a>
             <div class="dropdown-menu dropdown-menu-right"> 
@@ -229,6 +235,7 @@
         <p><strong>Phone Number:</strong> <span id="bookingPhone"></span></p>
         <p><strong>Address:</strong> <span id="bookingAddress"></span></p>
         <p><strong>Status:</strong> <span id="bookingStatus"></span></p>
+        <p><strong>Completed:</strong> <span id="payment_status"></span></p>
     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -256,6 +263,8 @@
             $('#bookingPhone').text(bookingDetails.phone);
             $('#bookingAddress').text(bookingDetails.address);
             $('#bookingStatus').text(bookingDetails.status);
+            $('#payment_status').text(bookingDetails.payment_status);
+
 
             // Show the modal
             $('#viewModal').modal('show');
